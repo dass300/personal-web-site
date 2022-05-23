@@ -1,0 +1,93 @@
+
+<script>
+  function validation() {
+    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const message = document.getElementById("message").value;
+    const send = document.getElementById("send");
+    const response = {
+      email: false,
+      name: false,
+      message: false,
+    };
+    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    
+
+    if (email.match(pattern)) {
+      send.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("emails").innerHTML = "";
+      });
+      response.email = true;
+    } else {
+      send.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("emails").innerHTML =
+          " Please enter valid email";
+      });
+      response.email = false;
+    }
+
+    if (name.match(/[0-9]/) || name == "") {
+      send.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("names").innerHTML =
+          " Please enter valid name";
+      });
+      response.name = false;
+    } else {
+      send.addEventListener("click", function (e) {
+        document.getElementById("names").innerHTML = "";
+      });
+
+      response.name = true;
+    }
+    if (message.length === 0) {
+      send.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("messages").innerHTML =
+          " Message cannot be empty!";
+      });
+      response.message = false;
+    } else {
+      send.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("messages").innerHTML = "";
+      });
+      response.message = true;
+    }
+    if (response.email && response.message && response.name) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+</script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"
+></script>
+<script>
+  async function handleSubmit(e) {
+    const isValidated = await validation();
+    console.log(isValidated);
+    if (isValidated) {
+      e.preventDefault();
+      $.ajax({
+        url: "https://script.google.com/macros/s/AKfycbyA9-Zvt1SAWpDhTOvamxLzI0PDS1EBsXH3Kyocm7G5uBAvbK1i2y6QqcKGngZ5BO9w/exec",
+        data: $("#submit-form").serialize(),
+        method: "post",
+        success: function (response) {
+          alert("Form submitted successfully");
+          window.location.reload();
+        },
+        error: function (err) {
+          alert("Something Error");
+        },
+      });
+    } else {
+      event.preventDefault();
+      alert("PLEASE ENTER DETAILS CORRECTLY!");
+    }
+  }
