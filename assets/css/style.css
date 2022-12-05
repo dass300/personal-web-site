@@ -964,3 +964,19 @@ section {
     padding-right: 20px 15px;
   }
 }
+button, input, optgroup, select, textarea {
+  width: 100%;
+}
+
+/* .input-group span {
+color: seagreen;
+} */
+
+/* .form-group span i{
+  color: seagreen;
+  size: 50px;
+} */
+
+contact-name.valid{
+color: #18d26e;
+}
